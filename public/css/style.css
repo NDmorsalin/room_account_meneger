@@ -1,0 +1,156 @@
+:root {
+    --bg-linear: linear-gradient(90deg, #52D794 -20.56%, #00B3BD 117.92%);
+    --error: #CC3300;
+}
+body {
+    background: var(--bg-linear);
+    height: 100%;
+    min-height: 100vh;
+    color: #fff;
+}
+input[type="text"], input[type="number"]{
+    border: none;
+    display: inline-block;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 10px 0px #00000040;
+}
+.error {
+    margin: 0;
+    text-align: left;
+    margin-bottom: 5px;
+    color: var(--error);
+}
+.input-wrapper {
+    background: var(--bg-linear);
+    padding: 2px;
+    position: relative;
+    border-radius: 2px;
+    margin-bottom: 10px;
+}
+.input-wrapper input {
+    position: relative;
+    display: inherit;
+    border-radius: inherit;
+    margin: 0;
+    border: none;
+    outline: none;
+    padding: 0 .325em;
+    z-index: 1;
+    width: 100%;
+    padding: 5px;
+}
+.submit {
+    width: 100%;
+    background: var(--bg-linear);
+    padding: 5px;
+    text-align: center;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    border-radius: 2px;
+}
+.login-img {
+    margin: 2rem 0;
+}
+.img-wrapper {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    margin: auto;
+}
+.img-wrapper img {
+    width: 100%;
+    height: 100%;
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 0 5px;
+}
+thead tr th{
+    background: #A2D2FF !important;
+    color: #0d0c0a;
+}
+td {
+    white-space: nowrap;
+    color: #fff;
+    padding: .5rem;
+}
+/* .room-table tbody tr {
+    background: #0d0c0a;
+   
+} */
+.display-table tbody td .items-list,.display-table td .items-price {
+    background: #0d0c0a;
+    padding: 5px;
+    border-radius: 5px;
+}
+.display-table tbody tr:last-child td {
+    border-top: 2px solid #202b33;
+    border-radius: 0;
+}
+td:first-child ,th:first-child {
+    border-left-style: solid;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+td:last-child ,th:last-child {
+    border-right-style: solid;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.will-pay{
+    background:  #A2D2FF;
+    padding: 5px;
+    border-radius: 5px;
+    display: inline-block;
+}
+.current-bill{
+    text-align: right;
+    background:  rgb(56,137,255);
+    padding: 5px;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+.tk-amount{
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.submit-form{
+    outline: none;
+    padding: none;
+    border: none;
+    box-shadow: 0px 4px 10px 0px #00000040;
+background: #A2D2FF;
+
+}
+.deposit-bill{
+    
+}
+.buy-goods-container{
+    background-color: #37389a83 ;
+}
+.goods-name{
+    width: 48%;
+}
+.goods-name input{
+    width: 100%;
+}
+.goods-price{
+    width: 45%;
+}
+.goods-price input {
+    width: 100%;
+}
+.buy-goods-section{
+   background: #00000050;
+   border-radius: 5px;
+}
+.add-new-btn button {
+    width: 100%;
+    height: 100%;
+    
+      }
