@@ -9,7 +9,7 @@ const depositSchema = new mongoose.Schema(
         totalDeposit: Number,
         depositBy: {
             name: { type: String, required: true },
-            bdnumber: { type: String, required: true },
+            bdnumber: { type: Number, required: true },
         },
         depositMonth: { type: String, required: true },
         depositDate: {
