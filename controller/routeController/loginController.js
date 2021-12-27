@@ -21,7 +21,7 @@ const login = async (req, res) => {
 
             if (isValidPassword) {
                 const memberData = {
-                    bdnumber: member.bdnumber,
+                    bdnumber: parseInt( member.bdnumber),
                     rank: member.rank,
                     name: member.name,
                     phone: member.phone,
