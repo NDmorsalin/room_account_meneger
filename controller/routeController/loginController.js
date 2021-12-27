@@ -29,9 +29,9 @@ const login = async (req, res) => {
                     roll: member.roll,
                 };
 
-                const token = jwt.sign(memberData, process.env.JWT_SECRET, { expiresIn: '1d' });
+                const token = jwt.sign(memberData, process.env.JWT_SECRET, { expiresIn: process.env.COOKIE_EXPIRE });
                 res.cookie(process.env.COOKIE_NAME, token, {
-                    expires: new Date(Date.now() + 24 * 3600000),
+                    expires: new Date(Date.now() + process.env.COOKIE_EXPIRE),
                     httpOnly: true,
                     signed: true,
                 });
