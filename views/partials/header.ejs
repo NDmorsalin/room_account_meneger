@@ -24,17 +24,23 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Features</a>
+                        <a class="nav-link" href="/"> Home </a>
                     </li>
+                    <% if (member.roll) { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/senior"> Control room </a>
+                    </li>
+                    <% } %>
+
                     <% if (member.name) { %>
-                     <li class="nav-item">
+                    <li class="nav-item">
                         <a onclick="logout()" class="nav-link" href="#">logout</a>
                     </li>
                     <% }else{ %>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/">Login</a>
-                        </li>
-                        <% } %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Login</a>
+                    </li>
+                    <% } %>
                 </ul>
             </div>
     </nav>

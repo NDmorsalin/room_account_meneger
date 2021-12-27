@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const memberSchema = new mongoose.Schema(
     {
         bdnumber: {
-            type: String,
+            type: Number,
             trim: true,
             required: true,
         },
@@ -33,6 +33,11 @@ const memberSchema = new mongoose.Schema(
         password: {
             type: String,
             required: true,
+        },
+        roll: {
+            type: String,
+            default: 'member',
+            enum: ['member', 'senior'],
         },
     },
     {

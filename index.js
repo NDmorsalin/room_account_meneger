@@ -9,9 +9,11 @@ const mongoose = require('mongoose');
 // internal dependency
 const { notFound, errorsHandler } = require('./middleware/errorsHandler');
 const homeRoute = require('./route/homeRoute');
+const seniorRoute = require('./route/seniorRoute');
 const loginRoute = require('./route/loginRoute');
 const signupRoute = require('./route/signupRoute');
-
+const { checkLogin } = require('./middleware/common/checkLogin');
+const decorateHtml = require('./middleware/common/decorateHtml');
 // express app
 
 const app = express();
@@ -47,11 +49,12 @@ app.set('view engine', 'ejs');
 
 // router
 app.use('/', homeRoute);
+app.use('/senior', seniorRoute);
 app.use('/login', loginRoute);
 app.use('/signup', signupRoute);
-
 // not found page
-app.use(notFound);
+const pageTitle = 'not found';
+app.use(decorateHtml(pageTitle), checkLogin, notFound);
 
 // error handler
 app.use(errorsHandler);

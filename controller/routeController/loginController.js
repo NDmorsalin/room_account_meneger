@@ -26,6 +26,7 @@ const login = async (req, res) => {
                     name: member.name,
                     phone: member.phone,
                     section: member.section,
+                    roll: member.roll,
                 };
 
                 const token = jwt.sign(memberData, process.env.JWT_SECRET, { expiresIn: '1d' });
@@ -55,7 +56,6 @@ const login = async (req, res) => {
 };
 
 const logOut = (req, res) => {
-    console.log(req.headers);
     res.clearCookie(process.env.COOKIE_NAME);
     res.send('logged out');
 };
