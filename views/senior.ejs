@@ -25,6 +25,7 @@
                     <th> Name </th>
                     <th> Phone </th>
                     <th> Section </th>
+                    <th> Delete Member </th>
                 </tr>
             </thead>
             <tbody id="tbody"></tbody>
@@ -59,11 +60,11 @@
         const result = await response.json();
 
         result.allMember.forEach((member) => {
-            const bdnumber = member ? .bdnumber || '000',
-                rank = member ? .rank || '---',
-                name = member ? .name || '---',
-                phone = member ? .phone || '---',
-                section = member ? .section || '---';
+            const bdnumber = member?.bdnumber || '000',
+                rank = member?.rank || '---',
+                name = member?.name || '---',
+                phone = member?.phone || '---',
+                section = member?.section || '---';
 
             let tr = `<tr>
                         <td>${bdnumber} </td>
@@ -71,6 +72,7 @@
                         <td> ${name}</td>
                         <td> ${phone}</td>
                         <td>  ${section} </td>
+                        <td > <button data-bd="${bdnumber}" class="btn btn-danger"> Delete </button> </td>
                     </tr>`
             tbody.insertAdjacentHTML("beforeend", tr);
         })
