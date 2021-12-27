@@ -12,7 +12,7 @@ const addMember = async (req, res) => {
 
     try {
         const memberData = {
-            bdnumber: req.body.bdnumber,
+            bdnumber:parseInt( req.body.bdnumber),
             rank: req.body.rank,
             name: req.body.name,
             phone: req.body.phone,
@@ -27,7 +27,6 @@ const addMember = async (req, res) => {
 
         // after save in db creat cookie and token
         
-        console.log(req.member.roll);
         const token = jwt.sign(memberData, process.env.JWT_SECRET, { expiresIn: '1d' });
         res.cookie(process.env.COOKIE_NAME, token, {
             expires: new Date(Date.now() + 24 * 3600000),
