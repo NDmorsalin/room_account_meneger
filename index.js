@@ -60,6 +60,6 @@ app.use(decorateHtml(pageTitle), checkLogin, notFound);
 app.use(errorsHandler);
 // server
 
-app.listen(3000, () => {
-    console.log('app is runingg on port 3000');
+app.listen(process.env.PORT, () => {
+    console.log(`app is running on port ${process.env.PORT}`);
 });

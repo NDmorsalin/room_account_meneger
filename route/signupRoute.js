@@ -14,7 +14,7 @@ const setRoll = require('../middleware/common/setRoll');
 // Router
 const router = express.Router();
 
-const pageTitle = ' Signup page ';
+const pageTitle = '-Signup ';
 
 // load signup page
 router.get('/', decorateHtml(pageTitle), getSignupPage);

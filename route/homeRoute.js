@@ -14,7 +14,7 @@ const decorateHtml = require('../middleware/common/decorateHtml');
 // Router
 const router = express.Router();
 
-const pageTitle = ' home Page';
+const pageTitle = 'Home ';
 
 // load home page
 router.get('/', decorateHtml(pageTitle), checkLogin, getHomePage);
