@@ -5,7 +5,8 @@ const express = require('express');
 const {
     getHomePage,
     getAllMember,
-    billDeposit,
+    //billDeposit,
+    pendingBillDeposit,
     buyGoods,
 } = require('../controller/routeController/homeController');
 const { checkLogin } = require('../middleware/common/checkLogin');
@@ -20,8 +21,10 @@ const pageTitle = 'Home ';
 router.get('/', decorateHtml(pageTitle), checkLogin, getHomePage);
 
 router.get('/allMember', checkLogin, getAllMember);
+/* 
+router.post('/billDeposit', checkLogin, billDeposit); */
 
-router.post('/billDeposit', checkLogin, billDeposit);
+router.post('/pendingBillDeposit', checkLogin, pendingBillDeposit);
 
 router.post('/buyGoods', checkLogin, buyGoods);
 

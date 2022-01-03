@@ -2,8 +2,14 @@
 // external dependency
 // internal dependency
 const Member = require('../../model/member');
+
 const { Deposit, Balance } = require('../../model/account');
+
+const { PendingBalance, PendingDeposit} = require('../../model/pendingAccount');
+
 const Goods = require('../../model/goods');
+const PendingGoods = require('../../model/pendingGoods');
+
 // load the home page
 const getHomePage = (req, res) => {
     res.render('home');
@@ -46,7 +52,7 @@ const getAllMember = async (req, res) => {
         });
     }
 };
-
+/* 
 const billDeposit = async (req, res) => {
     // add deposit balance amount in Deposit Schema
 
@@ -81,6 +87,8 @@ const billDeposit = async (req, res) => {
             }
         );
     }
+
+
     //  check Balance is present or not;
     const balance = await Balance.findOne({ thisMonth: req.body.depositMonth });
     // if balance is present and it's month is current month then update is or creat new
@@ -113,6 +121,79 @@ const billDeposit = async (req, res) => {
         balance: updatedBalance,
     });
 };
+ */
+
+
+const pendingBillDeposit = async (req, res) => {
+    // add deposit balance amount in Deposit Schema
+
+    const newPendingDeposit = await new PendingDeposit({
+        depositBalance: parseInt(req.body.depositAmount, 10),
+        totalDeposit: parseInt(req.body.depositAmount, 10),
+        depositMonth: req.body.depositMonth,
+        depositBy: {
+            name: req.member.name,
+            bdnumber: parseInt(req.member.bdnumber),
+        },
+    });
+    await newPendingDeposit.save();
+    /* 
+    // update total deposit
+    const deposit = await PendingDeposit.find({
+        depositBy: { name: req.member.name, bdnumber: parseInt(req.member.bdnumber) },
+        thisMonth: req.body.depositMonth,
+    });
+
+    let ttlDeposit = 0;
+    if (deposit) {
+        deposit.forEach((dpst) => {
+            ttlDeposit += dpst.depositBalance;
+        });
+        const updateDeposit = await PendingDeposit.updateMany(
+            {
+                depositBy: { name: req.member.name, bdnumber: parseInt(req.member.bdnumber) },
+                thisMonth: req.body.depositMonth,
+            },
+            {
+                totalDeposit: ttlDeposit,
+            }
+        );
+    }
+
+
+    //  check Balance is present or not;
+    const balance = await PendingBalance.findOne({ thisMonth: req.body.depositMonth });
+    // if balance is present and it's month is current month then update is or creat new
+    if (balance) {
+        if (balance.thisMonth === req.body.depositMonth) {
+            const previousBalance = balance.totalBalance;
+
+            await PendingBalance.updateOne(
+                { thisMonth: req.body.depositMonth },
+                { totalBalance: previousBalance + parseInt(req.body.depositAmount, 10) }
+            );
+        } else {
+            const newPendingBalance = await new PendingBalance({
+                totalBalance: req.body.depositAmount,
+                thisMonth: req.body.depositMonth,
+            });
+            newPendingBalance.save();
+        }
+    } else {
+        const newPendingBalance = await new PendingBalance({
+            totalBalance: req.body.depositAmount,
+            thisMonth: req.body.depositMonth,
+        });
+        newPendingBalance.save();
+    }
+    // get updated balance for display
+    const updatedPendingBalance = await PendingBalance.findOne({ thisMonth: req.body.depositMonth }); */
+    res.json({
+        message: 'Your deposit Balance is pending for confirmation'
+    });
+};
+
+
 const buyGoods = async (req, res) => {
     // save goods
     const goods = await Goods({
@@ -156,6 +237,7 @@ const buyGoods = async (req, res) => {
 module.exports = {
     getHomePage,
     getAllMember,
-    billDeposit,
+    //billDeposit,
+    pendingBillDeposit,
     buyGoods,
 };

@@ -219,21 +219,30 @@
             depositMonth: month[new Date().getMonth()]
         };
 
-        const request = await fetch('/billDeposit', {
+        /* const request = await fetch('/billDeposit', {
+            method: 'POST',
+            body: JSON.stringify(billObj),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }); */
+
+        const request = await fetch('/pendingBillDeposit', {
             method: 'POST',
             body: JSON.stringify(billObj),
             headers: {
                 'Content-Type': 'application/json'
             },
         });
-
-        billAmount.value = '';
+         billAmount.value = '';
         const result = await request.json()
-
+/*
         iHavePaidSeeAll.innerHTML = result?.totalDeposit || 0;
         iHavePaid.innerHTML = result?.totalDeposit || 0;
         uWillPayAmnt.innerHTML = result.balance?.thisMonthWillPay || 0;
-        currentBall.innerHTML = result.balance?.totalBalance || result?.totalDeposit || 0;
+        currentBall.innerHTML = result.balance?.totalBalance || result?.totalDeposit || 0; 
+        */
+        alert(result.message)
     })
 </script>
 
