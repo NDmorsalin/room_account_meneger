@@ -25,6 +25,7 @@
                     <th> Name </th>
                     <th> Phone </th>
                     <th> Section </th>
+                    <th> Paid </th>
                 </tr>
             </thead>
             <tbody id="tbody"></tbody>
@@ -34,18 +35,18 @@
         <div class="billance py-3 d-flex justify-content-between flex-wrap">
             <p class="">
                 <span class="will-pay bg-danger">
-                    This month you will pay <span class="tk-amount" id="u-will-pay-amnt">1000</span> <sub>
+                    This month you will pay <span class="tk-amount" id="u-will-pay-amnt">0</span> <sub>
                         <strong>Tk</strong></sub>
                 </span>
             </p>
             <p class="">
                 <span class="will-pay bg-success">
-                    I have paid <span class="tk-amount" id="i-have-paid">1000</span> <sub> <strong>Tk</strong></sub>
+                    I have paid <span class="tk-amount" id="i-have-paid">0</span> <sub> <strong>Tk</strong></sub>
                 </span>
             </p>
             <p class="text-end">
                 <span class="current-bill bg-primary text-end">
-                    Current billance <span class="tk-amount" id="current-ball">1000</span> <sub>
+                    Current ballance <span class="tk-amount" id="current-ball">0</span> <sub>
                         <strong>Tk</strong></sub>
                 </span>
             </p>
@@ -58,7 +59,7 @@
             </div>
             <div class="">
 
-                <input type="submit" class="submit-form btn  d-block" name="submit-billl" id="submit-billl"
+                <input type="submit" class="submit-form btn  d-block" name="submit-bill" id="submit-bill"
                     value="Deposit Bill" />
             </div>
         </form>
@@ -157,13 +158,20 @@
             },
         });
         const result = await response.json();
-
+        
         result.allMember.forEach((member) => {
             const bdnumber = member ?.bdnumber || '000',
                 rank = member ?.rank || '---',
                 name = member ?.name || '---',
                 phone = member ?.phone || '---',
                 section = member ?.section || '---';
+                
+                let totalDeposit;
+                result.lustDepositByAll.forEach((eachDeposit)=>{
+                    if(eachDeposit.depositBy.bdnumber === bdnumber){
+                        totalDeposit = eachDeposit.totalDeposit;
+                    }
+                })
 
             let tr = `<tr>
                         <td>${bdnumber} </td>
@@ -171,6 +179,7 @@
                         <td> ${name}</td>
                         <td> ${phone}</td>
                         <td>  ${section} </td>
+                        <td id="iHavePaidSeeAll">  ${totalDeposit|| 0} </td>
                     </tr>`
             tbody.insertAdjacentHTML("beforeend", tr);
         })
@@ -191,7 +200,7 @@
                 </td>
             </tr>`
             displayGoodsTbody.insertAdjacentHTML("beforeend", tr);
-        })
+        });
         iHavePaid.innerHTML = result.lustDepositByMe ?.totalDeposit || 0;
         uWillPayAmnt.innerHTML = result.balance ?.thisMonthWillPay || 0;
         currentBall.innerHTML = result.balance ?.totalBalance || 0;
@@ -202,6 +211,8 @@
     billDepositForm.addEventListener('submit', async function (event) {
         event.preventDefault();
 
+        const iHavePaidSeeAll = document.querySelector('#iHavePaidSeeAll');
+        
         const billAmount = billDepositForm.querySelector('#deposit-bill')
         const billObj = {
             depositAmount: billAmount.value,
@@ -219,6 +230,7 @@
         billAmount.value = '';
         const result = await request.json()
 
+        iHavePaidSeeAll.innerHTML = result?.totalDeposit || 0;
         iHavePaid.innerHTML = result?.totalDeposit || 0;
         uWillPayAmnt.innerHTML = result.balance?.thisMonthWillPay || 0;
         currentBall.innerHTML = result.balance?.totalBalance || result?.totalDeposit || 0;

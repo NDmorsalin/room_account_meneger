@@ -21,6 +21,13 @@ input[type="text"], input[type="number"]{
     margin-bottom: 5px;
     color: var(--error);
 }
+.logo{
+    width: 4rem;
+    height: 4rem;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid var(--bg-linear);
+}
 .input-wrapper {
     background: var(--bg-linear);
     padding: 2px;

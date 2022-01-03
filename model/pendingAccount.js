@@ -3,7 +3,7 @@
 
 const mongoose = require('mongoose');
 
-const depositSchema = new mongoose.Schema(
+const pendingDepositSchema = new mongoose.Schema(
     {
         depositBalance: { type: Number, default: 0 },
         totalDeposit: Number,
@@ -21,7 +21,7 @@ const depositSchema = new mongoose.Schema(
         timestamps: true,
     }
 );
-const balanceSchema = new mongoose.Schema(
+const pendingBalanceSchema = new mongoose.Schema(
     {
         thisMonthWillPay: { type: Number, default: 0 },
         totalBalance: { type: Number, default: 0 },
@@ -32,27 +32,11 @@ const balanceSchema = new mongoose.Schema(
         timestamps: true,
     }
 );
-/*
-const buyingSchema = new mongoose.Schema(
-    {
-        buyingBalance: { type: Number, default: 0 },
-        boughtBy: {
-            name: { type: String, required: true },
-            bdnumber: { type: String, required: true },
-        },
-        buyingDate: {
-            type: Date,
-            default: Date.now,
-        },
-    },
-    {
-        timestamps: true,
-    }
-); */
+
 
 // deposit Model
-const Deposit = mongoose.model('Deposit', depositSchema);
+const PendingDeposit = mongoose.model('PendingDeposit', pendingDepositSchema);
 // Balance Model
-const Balance = mongoose.model('Balance', balanceSchema);
+const PendingBalance = mongoose.model('PendingBalance', pendingBalanceSchema);
 
-module.exports = { Deposit, Balance };
+module.exports = { PendingDeposit , PendingBalance };

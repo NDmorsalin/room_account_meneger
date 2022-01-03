@@ -30,11 +30,11 @@ const setRoll = async (req, res, next) => {
                 }
             );
             req.member = { roll: 'senior' };
-            console.log(updateMwmber);
+            //console.log(updateMwmber);
         } else {
             req.member = { roll: 'member' };
         }
-        console.log(bdSenior, bdArr, req.member.roll);
+        //console.log(bdSenior, bdArr, req.member.roll);
         next();
     } catch (err) {
         console.log(err.message);

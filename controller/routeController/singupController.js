@@ -27,7 +27,7 @@ const addMember = async (req, res) => {
 
         // after save in db creat cookie and token
         
-        console.log(req.member.roll);
+        //console.log(req.member.roll);
         const token = jwt.sign(memberData, process.env.JWT_SECRET, { expiresIn: '1d' });
         res.cookie(process.env.COOKIE_NAME, token, {
             expires: new Date(Date.now() + 24 * 3600000),

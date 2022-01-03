@@ -15,16 +15,24 @@ const getAllMember = async (req, res) => {
         const balance = await Balance.findOne({ thisMonth: req.headers.thismonth });
         const allMember = await Member.find({}, { password: 0 }).sort('bdnumber');
         const lustDepositByMe = await Deposit.findOne({
-            depositBy: { name: req.member.name, bdnumber: req.member.bdnumber },
+            depositBy: { name: req.member.name, bdnumber: parseInt(req.member.bdnumber) },
             thisMonth: req.headers.thismonth,
         });
 
+        // todo remove
+        const lustDepositByAll = await Deposit.find({
+            thisMonth: req.headers.thismonth,
+        });
+
+        // todo remove
         const goods = await Goods.find({
             thisMonth: req.headers.thismonth,
         });
+
         res.json({
             balance,
             allMember,
+            lustDepositByAll,
             lustDepositByMe,
             goods,
         });
@@ -48,13 +56,13 @@ const billDeposit = async (req, res) => {
         depositMonth: req.body.depositMonth,
         depositBy: {
             name: req.member.name,
-            bdnumber: req.member.bdnumber,
+            bdnumber: parseInt(req.member.bdnumber),
         },
     });
     await newDeposit.save();
     // update total deposit
     const deposit = await Deposit.find({
-        depositBy: { name: req.member.name, bdnumber: req.member.bdnumber },
+        depositBy: { name: req.member.name, bdnumber: parseInt(req.member.bdnumber) },
         thisMonth: req.body.depositMonth,
     });
 
@@ -65,7 +73,7 @@ const billDeposit = async (req, res) => {
         });
         const updateDeposit = await Deposit.updateMany(
             {
-                depositBy: { name: req.member.name, bdnumber: req.member.bdnumber },
+                depositBy: { name: req.member.name, bdnumber: parseInt(req.member.bdnumber) },
                 thisMonth: req.body.depositMonth,
             },
             {

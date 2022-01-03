@@ -18,7 +18,7 @@ const loginValidatorErrors = (req, res, next) => {
     if (Object.keys(mapErrors).length === 0) {
         next();
     } else {
-        console.log(req.body);
+        //console.log(req.body);
         res.render('login', {
             data: req.body,
             errors: mapErrors,

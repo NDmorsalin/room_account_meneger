@@ -4,7 +4,7 @@
 
       <form method="POST" action="/signup" class="signup-form bg-dark p-4 text-center my-5 rounded">
         <div class="input-wrapper">
-          <input type="number" id="bdnumber" placeholder="Enter ymyour BD Number" name="bdnumber" value="<%= data.bdnumber? data.bdnumber : '' %>">
+          <input type="number" id="bdnumber" placeholder="Enter your BD Number" name="bdnumber" value="<%= data.bdnumber? data.bdnumber : '' %>">
         </div>
         <% if (errors.bdnumber) { %>
         <p class="error  "><%= errors.bdnumber.msg %> </p>
