@@ -118,7 +118,7 @@
                         <tr>
                             <td> total cost this month</td>
                             <td>
-                                <h3 class="items-price totalCostThisMonth">3000</h3>
+                                <h3 class="items-price totalCostThisMonth">0</h3>
                             </td>
                         </tr>
                     </tfoot>
@@ -306,7 +306,7 @@
         goodsNameArr.forEach((goodsName, index) => {
             goods[`${goodsName}`] = goodsPriceArr[index];
         });
-        const request = await fetch('/buyGoods', {
+        const request = await fetch('/pendingBuyGoods', {
             method: 'POST',
             body: JSON.stringify({
                 goods,
@@ -320,25 +320,8 @@
         });
 
         const result = await request.json();
-
-        let tr = `<tr>
-                <td>
-                    <div class="items-list">
-                        ${Object.keys(result.goodsNames)}
-                    </div>
-                    <p class="m-0">
-                        ${result.boughtBy.name}, ${result.buyingDate}
-                    </p>
-                </td>
-                <td>
-                    <h3 class="items-price">${result.totalPrice}</h3>
-                </td>
-            </tr>`
-        displayGoodsTbody.insertAdjacentHTML("beforeend", tr);
-
-        currentBall.innerHTML = result?.totalBalance || 0;
-        totalCostThisMonth.innerHTML = result?.totalCost || 0;
-
+        //console.log(result);
+        
         const addGoodsFiled = document.getElementsByClassName('buy-input');
         let len = addGoodsFiled.length
         for(let i = 1; i < len ; i++){

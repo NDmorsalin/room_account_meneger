@@ -2,7 +2,7 @@
 const express = require('express');
 
 // internal dependency
-const { getSeniorPage, getAllMember,getAllPendingDeposit } = require('../controller/routeController/seniorController');
+const { getSeniorPage, getAllMember, getAllPendingDeposit,getAllPendingGoods,acceptDeposit,deleteDeposit,acceptGoods,deleteGoods } = require('../controller/routeController/seniorController');
 const { checkLogin } = require('../middleware/common/checkLogin');
 const decorateHtml = require('../middleware/common/decorateHtml');
 
@@ -14,8 +14,18 @@ const pageTitle = 'Room senior';
 // load home page
 router.get('/', decorateHtml(pageTitle), checkLogin, getSeniorPage);
 
-router.get('/allMember', getAllMember);
+router.get('/allMember',checkLogin, getAllMember);
 
-router.get('/getAllPendingDeposit', getAllPendingDeposit);
+router.get('/getAllPendingDeposit',checkLogin, getAllPendingDeposit);
+
+router.get('/getAllPendingGoods',checkLogin, getAllPendingGoods);
+
+router.delete('/acceptDeposit',checkLogin, acceptDeposit);
+
+router.delete('/deleteDeposit',checkLogin, deleteDeposit);
+
+router.delete('/acceptGoods',checkLogin, acceptGoods);
+
+router.delete('/deleteGoods',checkLogin, deleteGoods);
 
 module.exports = router;

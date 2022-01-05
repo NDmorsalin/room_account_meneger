@@ -13,27 +13,9 @@
         </div>
     </header>
 </div>
-<div class="container">
-    <h3 class="text-center pt-5"> Room member list</h3>
-    <div class="room-table table-responsive">
-
-        <table class="table table-hover table-dark table-borderless">
-            <thead>
-                <tr>
-                    <th> BD </th>
-                    <th> Rank </th>
-                    <th> Name </th>
-                    <th> Phone </th>
-                    <th> Section </th>
-                    <th> Delete Member </th>
-                </tr>
-            </thead>
-            <tbody id="tbody"></tbody>
-        </table>
-    </div>
-</div>
 
 <!-- Pending Deposit balance -->
+
 <div class="container">
     <div class="pendingDepositSection">
         <h3 class="text-center pt-5"> Pending Deposit list</h3>
@@ -54,6 +36,51 @@
         </div>
     </div>
 </div>
+<!-- Pending Buying goods -->
+
+<div class="container">
+    <div class="pendingBuyingSection">
+        <h3 class="text-center pt-5"> Pending Goods list</h3>
+        <div class="room-table table-responsive">
+    
+            <table class="table table-hover table-dark table-borderless">
+                <thead>
+                    <tr>
+                        <th> BD </th>
+                        <th> Name </th>
+                        <th> Goods Names </th>
+                        <th> Amount </th>
+                        <th> Accept </th>
+                        <th> Delete </th>
+                    </tr>
+                </thead>
+                <tbody id="buyingTbody"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <h3 class="text-center pt-5"> Room member list</h3>
+    <div class="room-table table-responsive">
+
+        <table class="table table-hover table-dark table-borderless">
+            <thead>
+                <tr>
+                    <th> BD </th>
+                    <th> Rank </th>
+                    <th> Name </th>
+                    <th> Phone </th>
+                    <th> Section </th>
+                    <th> Delete Member </th>
+                </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+        </table>
+    </div>
+</div>
+
 <!-- JavaScript Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
@@ -64,6 +91,7 @@
 <script>
     const tbody = document.getElementById('tbody');
     const depositTbody = document.getElementById('depositTbody');
+    const buyingTbody = document.getElementById('buyingTbody');
 
 
     const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
@@ -71,7 +99,7 @@
     ]
     // get all members
     async function getAllMembers() {
-        const response = await fetch('/allMember', {
+        const response = await fetch('/senior/allMember', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -79,7 +107,7 @@
             },
         });
         const result = await response.json();
-
+        //console.log(result);
         result.allMember.forEach((member) => {
             const bdnumber = member?.bdnumber || '000',
                 rank = member?.rank || '---',
@@ -93,18 +121,24 @@
                         <td> ${name}</td>
                         <td> ${phone}</td>
                         <td>  ${section} </td>
-                        <td > <button data-bd="${bdnumber}" class="btn btn-danger"> Delete </button> </td>
+                        <td > <button onclick="deleteMember('${member._id}')" class="btn btn-danger deleteMe"> Delete </button> </td>
                     </tr>`
             tbody.insertAdjacentHTML("beforeend", tr);
+            /* const allBtn = document.querySelectorAll('.deleteMe')
+                    allBtn.forEach( (deleteMe)=>{
+                        deleteMe.parentElement.parentElement.addEventListener('click', function (){
+                            this.remove()
+                        })
+                    }) */
         })
 
     }
     getAllMembers()// get all members
-    
+
     
     async function getAllPendingDeposit() {
         
-        const response = await fetch('/getAllPendingDeposit', {
+        const response = await fetch('/senior/getAllPendingDeposit', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -112,35 +146,129 @@
             },
         });
         const result = await response.json();
-        console.log(result);
-/* 
+        //console.log(result);
+
         result.allPendingDeposit.forEach((pendingDeposit) => {
             const bdnumber = pendingDeposit?.depositBy?.bdnumber || '000',
                 name = pendingDeposit?.depositBy?.name || '---',
-                depositBalance = pendingDeposit?.depositBalance || 0,
-                section = member?.section || '---';
+                depositBalance = pendingDeposit?.depositBalance || 0;
 
             let tr = `<tr>
                         <td>${bdnumber} </td>
                         <td> ${name}</td>
                         <td> ${depositBalance}</td>
 
-                        <td>  <button onclick="acceptPendingDeposit(${pendingDeposit._id})" data-bd="${bdnumber}" class="btn btn-danger"> Delete </button></td>
+                        <td>  <button onclick="acceptPendingDeposit('${pendingDeposit._id}')"  class="btn btn-success deleteMe"> Accept </button></td>
 
-                        <td > <button onclick="deletePendingDeposit(${pendingDeposit._id})" data-bd="${bdnumber}" class="btn btn-danger"> Delete </button> </td>
+                        <td > <button onclick="deletePendingDeposit('${pendingDeposit._id}')" class="btn btn-danger deleteMe"> Delete </button> </td>
                     </tr>`
                     depositTbody.insertAdjacentHTML("beforeend", tr);
-        }) */
 
-    }
+                    const allBtn = document.querySelectorAll('.deleteMe')
+                    allBtn.forEach( (deleteMe)=>{
+                        deleteMe.parentElement.parentElement.addEventListener('click', function (){
+                            this.remove()
+                        })
+                    })
+        }) 
+     }
     getAllPendingDeposit()
 
+    async function getAllPendingGoods() {
+        
+        const response = await fetch('/senior/getAllPendingGoods', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                thismonth: month[new Date().getMonth()]
+            },
+        });
+        const result = await response.json();
+        //console.log(result);
 
-    function acceptPendingDeposit(){
-        alert('Accept')
+       result.allPendingGoods.forEach((pendingGoods) => {
+           
+             const bdnumber = pendingGoods?.boughtBy?.bdnumber || '000',
+                name = pendingGoods?.boughtBy?.name || '---',
+                totalPrice = pendingGoods?.totalPrice || 0;
+ 
+            let tr = `<tr>
+                        <td>${bdnumber} </td>
+                        <td> ${name}</td>
+                        <td> ${Object.keys(pendingGoods.goodsNames)} </td>
+                        <td> ${totalPrice}</td>
+
+                        <td>  <button onclick="acceptPendingGoods('${pendingGoods._id}')"  class="btn btn-success deleteMe"> Accept </button></td>
+
+                        <td > <button onclick="deletePendingGoods('${pendingGoods._id}')" class="btn btn-danger deleteMe"> Delete </button> </td>
+                    </tr>`
+                    buyingTbody.insertAdjacentHTML("beforeend", tr);
+                    const allBtn = document.querySelectorAll('.deleteMe')
+                    allBtn.forEach( (deleteMe)=>{
+                        deleteMe.parentElement.parentElement.addEventListener('click', function (){
+                            this.remove()
+                        })
+                    })
+        }) 
+     }
+    getAllPendingGoods()
+
+
+    async function acceptPendingDeposit(id){
+        const request = await fetch('/senior/acceptDeposit',{
+            method: 'DELETE',
+            body: JSON.stringify({id}),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        const result = await request.json();
+
+
+        //console.log(result);
     }
-    function deletePendingDeposit(){
-        alert('delete')
+
+    async function deletePendingDeposit(id){
+        const request = await fetch('/senior/deleteDeposit',{
+            method: 'DELETE',
+            body: JSON.stringify({id}),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        const result = await request.json();
+
+
+        //console.log(result);
+    }
+    
+    async function acceptPendingGoods(id){
+        const request = await fetch('/senior/acceptGoods',{
+            method: 'DELETE',
+            body: JSON.stringify({id}),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        const result = await request.json();
+        //console.log(result);
+    }
+
+    async function deletePendingGoods(id){
+        const request = await fetch('/senior/deleteGoods',{
+            method: 'DELETE',
+            body: JSON.stringify({id}),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        const result = await request.json();
+
+        //console.log(id);
+    }
+
+    function deleteMember(id){
+        alert(' delete '+id)
     }
 </script>
 

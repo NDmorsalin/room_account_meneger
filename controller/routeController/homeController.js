@@ -6,9 +6,9 @@ const Member = require('../../model/member');
 const { Deposit, Balance } = require('../../model/account');
 
 const { PendingBalance, PendingDeposit} = require('../../model/pendingAccount');
+const PendingGoods = require('../../model/pendingGoods');
 
 const Goods = require('../../model/goods');
-const PendingGoods = require('../../model/pendingGoods');
 
 // load the home page
 const getHomePage = (req, res) => {
@@ -126,7 +126,7 @@ const billDeposit = async (req, res) => {
 
 const pendingBillDeposit = async (req, res) => {
     // add deposit balance amount in Deposit Schema
-
+try{
     const newPendingDeposit = await new PendingDeposit({
         depositBalance: parseInt(req.body.depositAmount, 10),
         totalDeposit: parseInt(req.body.depositAmount, 10),
@@ -191,9 +191,19 @@ const pendingBillDeposit = async (req, res) => {
     res.json({
         message: 'Your deposit Balance is pending for confirmation'
     });
+
+}catch(err){
+    res.status(500).json({
+        errors: {
+            common: {
+                msg: err.message,
+            },
+        },
+    });
+}
 };
 
-
+/* 
 const buyGoods = async (req, res) => {
     // save goods
     const goods = await Goods({
@@ -232,6 +242,60 @@ const buyGoods = async (req, res) => {
         boughtBy: goods.boughtBy,
         buyingDate: goods.buyingDate,
     });
+}; */
+
+
+const pendingBuyGoods = async (req, res) => {
+    try{
+    // save goods
+    const pendingGoods = await PendingGoods({
+        goodsNames: req.body.goods,
+        totalPrice: req.body.totalPrice,
+        boughtBy: {
+            name: req.member.name,
+            bdnumber: req.member.bdnumber,
+        },
+        thisMonth: req.body.thisMonth,
+    });
+
+    await pendingGoods.save();
+
+    /* // update balance
+
+    const balance = await Balance.findOne({ thisMonth: req.body.thisMonth });
+    const prevBall = balance.totalBalance;
+    const prevConst = balance.totalCost;
+
+    const newBalance = await Balance.findOneAndUpdate(
+        { thisMonth: req.body.thisMonth },
+        {
+            totalBalance: prevBall - req.body.totalPrice,
+            totalCost: prevConst + req.body.totalPrice,
+        },
+        { new: true }
+    );
+
+    res.json({
+        thisMonthWillPay: newBalance.thisMonthWillPay,
+        totalBalance: newBalance.totalBalance,
+        totalCost: newBalance.totalCost,
+        goodsNames: goods.goodsNames,
+        totalPrice: goods.totalPrice,
+        boughtBy: goods.boughtBy,
+        buyingDate: goods.buyingDate,
+    }); */
+    res.json({
+        message: 'your Buying goods is pending for senior man confirmation'
+    })
+}catch(err){
+    res.status(500).json({
+        errors: {
+            common: {
+                msg: err.message,
+            },
+        },
+    });
+}
 };
 
 module.exports = {
@@ -239,5 +303,5 @@ module.exports = {
     getAllMember,
     //billDeposit,
     pendingBillDeposit,
-    buyGoods,
+    pendingBuyGoods,
 };
