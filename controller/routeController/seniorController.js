@@ -72,6 +72,40 @@ const getAllPendingGoods = async (req, res)=>{
   }
 }
 
+const fixedBill = async (req, res) => {
+  try {
+      const balance = await Balance.findOneAndUpdate({ thisMonth: req.body.thisMonth }, {
+        $set: {
+          thisMonthWillPay: parseInt(req.body.fixedBill),
+        }
+      });
+
+      if (balance) {
+        res.json({
+          message:`${req.body.thisMonth} bill set successful`
+        })
+      } else {
+        const newBalance = await Balance({
+          thisMonth: req.body.thisMonth,
+          thisMonthWillPay: parseInt(req.body.fixedBill),
+        });
+
+        res.json({
+          message:`${req.body.thisMonth} bill set successful`
+        })
+      }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      errors: {
+        common: {
+          msg: err.message,
+        },
+      },
+    });
+  }
+}
+
 const acceptDeposit = async (req, res) => {
   try {
     const pDeposit = await PendingDeposit.findByIdAndDelete(req.body.id);
@@ -83,8 +117,8 @@ const acceptDeposit = async (req, res) => {
       totalDeposit: pDeposit.depositBalance,
       depositMonth: pDeposit.depositMonth,
       depositBy: {
-        name: req.member.name,
-        bdnumber: parseInt(req.member.bdnumber),
+        name: pDeposit.depositBy.name,
+        bdnumber: parseInt(pDeposit.depositBy.bdnumber),
       },
     });
     await newDeposit.save();
@@ -163,7 +197,6 @@ const acceptDeposit = async (req, res) => {
 const deleteDeposit = async (req, res) => {
   try {
     const pDeposit = await PendingDeposit.findByIdAndDelete(req.body.id);
-    console.log(pDeposit);
 
     res.json({
       message: "pending deposit is deleted",
@@ -189,8 +222,8 @@ const acceptGoods = async (req, res) => {
       goodsNames: pGoods.goodsNames,
       totalPrice: pGoods.totalPrice,
       boughtBy: {
-          name: req.member.name,
-          bdnumber: req.member.bdnumber,
+          name: pGoods.boughtBy.name,
+          bdnumber: parseInt(pGoods.boughtBy.bdnumber),
       },
       thisMonth: pGoods.thisMonth,
   });
@@ -250,6 +283,7 @@ module.exports = {
   getAllMember,
   getAllPendingDeposit,
   getAllPendingGoods,
+  fixedBill,
   acceptGoods,
   acceptDeposit,
   deleteDeposit,

@@ -1,121 +1,138 @@
 <%- include('./partials/header.ejs'); %>
 
-<div class="container ">
-    <header class="header">
-        <h2 class="room-name"><%= member.name %> </h2>
+    <div class="container ">
+        <header class="header">
+            <h2 class="room-name">
+                <%= member.name %>
+            </h2>
 
-        <div class="menu">
-            <div class="menu-btn">
-                <span></span>
-                <span></span>
-                <span></span>
+            <div class="menu">
+                <div class="menu-btn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </header>
+    </div>
+
+    <!-- Pending Deposit balance -->
+
+    <div class="container">
+        <div class="pendingDepositSection">
+            <h3 class="text-center pt-5"> Pending Deposit list</h3>
+            <div class="room-table table-responsive">
+
+                <table class="table table-hover table-dark table-borderless">
+                    <thead>
+                        <tr>
+                            <th> BD </th>
+                            <th> Name </th>
+                            <th> Amount </th>
+                            <th> Accept </th>
+                            <th> Delete </th>
+                        </tr>
+                    </thead>
+                    <tbody id="depositTbody"></tbody>
+                </table>
             </div>
         </div>
-    </header>
-</div>
+    </div>
+    <!-- Pending Buying goods -->
 
-<!-- Pending Deposit balance -->
+    <div class="container">
+        <div class="pendingBuyingSection">
+            <h3 class="text-center pt-5"> Pending Goods list</h3>
+            <div class="room-table table-responsive">
 
-<div class="container">
-    <div class="pendingDepositSection">
-        <h3 class="text-center pt-5"> Pending Deposit list</h3>
+                <table class="table table-hover table-dark table-borderless">
+                    <thead>
+                        <tr>
+                            <th> BD </th>
+                            <th> Name </th>
+                            <th> Goods Names </th>
+                            <th> Amount </th>
+                            <th> Accept </th>
+                            <th> Delete </th>
+                        </tr>
+                    </thead>
+                    <tbody id="buyingTbody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+
+
+        <form class="whatWillFixedTisMonth d-flex justify-content-between align-items-end">
+            <div class="">
+                <label class="d-block" for="deposit-bill">What will All Pay this Month?</label>
+                <input type="number" class="d-block deposit-bill" name="fixedBill" id="fixedBill" value=""
+                    placeholder="1000 tk" />
+            </div>
+            <div class="">
+
+                <input type="submit" class="submit-form btn  d-block" name="submit-fixedBill" id="submit-bill"
+                    value="Everyone Will pay" />
+            </div>
+        </form>
+    </div>
+
+    <div class="container">
+        <h3 class="text-center pt-5"> Room member list</h3>
         <div class="room-table table-responsive">
-    
+
             <table class="table table-hover table-dark table-borderless">
                 <thead>
                     <tr>
                         <th> BD </th>
+                        <th> Rank </th>
                         <th> Name </th>
-                        <th> Amount </th>
-                        <th> Accept </th>
-                        <th> Delete </th>
+                        <th> Phone </th>
+                        <th> Section </th>
+                        <th> Delete Member </th>
                     </tr>
                 </thead>
-                <tbody id="depositTbody"></tbody>
+                <tbody id="tbody"></tbody>
             </table>
         </div>
     </div>
-</div>
-<!-- Pending Buying goods -->
 
-<div class="container">
-    <div class="pendingBuyingSection">
-        <h3 class="text-center pt-5"> Pending Goods list</h3>
-        <div class="room-table table-responsive">
-    
-            <table class="table table-hover table-dark table-borderless">
-                <thead>
-                    <tr>
-                        <th> BD </th>
-                        <th> Name </th>
-                        <th> Goods Names </th>
-                        <th> Amount </th>
-                        <th> Accept </th>
-                        <th> Delete </th>
-                    </tr>
-                </thead>
-                <tbody id="buyingTbody"></tbody>
-            </table>
-        </div>
-    </div>
-</div>
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+        </script>
+    <script src="js/script.js"></script>
+
+    <script>
+        const tbody = document.getElementById('tbody');
+        const depositTbody = document.getElementById('depositTbody');
+        const buyingTbody = document.getElementById('buyingTbody');
 
 
-<div class="container">
-    <h3 class="text-center pt-5"> Room member list</h3>
-    <div class="room-table table-responsive">
+        const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
+            'September', 'October', 'November', 'December'
+        ]
+        // get all members
+        async function getAllMembers() {
+            const response = await fetch('/senior/allMember', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    thismonth: month[new Date().getMonth()]
+                },
+            });
+            const result = await response.json();
+            //console.log(result);
+            result.allMember.forEach((member) => {
+                const bdnumber = member?.bdnumber || '000',
+                    rank = member?.rank || '---',
+                    name = member?.name || '---',
+                    phone = member?.phone || '---',
+                    section = member?.section || '---';
 
-        <table class="table table-hover table-dark table-borderless">
-            <thead>
-                <tr>
-                    <th> BD </th>
-                    <th> Rank </th>
-                    <th> Name </th>
-                    <th> Phone </th>
-                    <th> Section </th>
-                    <th> Delete Member </th>
-                </tr>
-            </thead>
-            <tbody id="tbody"></tbody>
-        </table>
-    </div>
-</div>
-
-<!-- JavaScript Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
-</script>
-
-<script src="js/script.js"></script>
-
-<script>
-    const tbody = document.getElementById('tbody');
-    const depositTbody = document.getElementById('depositTbody');
-    const buyingTbody = document.getElementById('buyingTbody');
-
-
-    const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
-        'September', 'October', 'November', 'December'
-    ]
-    // get all members
-    async function getAllMembers() {
-        const response = await fetch('/senior/allMember', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                thismonth: month[new Date().getMonth()]
-            },
-        });
-        const result = await response.json();
-        //console.log(result);
-        result.allMember.forEach((member) => {
-            const bdnumber = member?.bdnumber || '000',
-                rank = member?.rank || '---',
-                name = member?.name || '---',
-                phone = member?.phone || '---',
-                section = member?.section || '---';
-
-            let tr = `<tr>
+                let tr = `<tr>
                         <td>${bdnumber} </td>
                         <td> ${rank}</td>
                         <td> ${name}</td>
@@ -123,37 +140,37 @@
                         <td>  ${section} </td>
                         <td > <button onclick="deleteMember('${member._id}')" class="btn btn-danger deleteMe"> Delete </button> </td>
                     </tr>`
-            tbody.insertAdjacentHTML("beforeend", tr);
-            /* const allBtn = document.querySelectorAll('.deleteMe')
-                    allBtn.forEach( (deleteMe)=>{
-                        deleteMe.parentElement.parentElement.addEventListener('click', function (){
-                            this.remove()
-                        })
-                    }) */
-        })
+                tbody.insertAdjacentHTML("beforeend", tr);
+                /* const allBtn = document.querySelectorAll('.deleteMe')
+                        allBtn.forEach( (deleteMe)=>{
+                            deleteMe.parentElement.parentElement.addEventListener('click', function (){
+                                this.remove()
+                            })
+                        }) */
+            })
 
-    }
-    getAllMembers()// get all members
+        }
+        getAllMembers()// get all members
 
-    
-    async function getAllPendingDeposit() {
-        
-        const response = await fetch('/senior/getAllPendingDeposit', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                thismonth: month[new Date().getMonth()]
-            },
-        });
-        const result = await response.json();
-        //console.log(result);
 
-        result.allPendingDeposit.forEach((pendingDeposit) => {
-            const bdnumber = pendingDeposit?.depositBy?.bdnumber || '000',
-                name = pendingDeposit?.depositBy?.name || '---',
-                depositBalance = pendingDeposit?.depositBalance || 0;
+        async function getAllPendingDeposit() {
 
-            let tr = `<tr>
+            const response = await fetch('/senior/getAllPendingDeposit', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    thismonth: month[new Date().getMonth()]
+                },
+            });
+            const result = await response.json();
+            //console.log(result);
+
+            result.allPendingDeposit.forEach((pendingDeposit) => {
+                const bdnumber = pendingDeposit?.depositBy?.bdnumber || '000',
+                    name = pendingDeposit?.depositBy?.name || '---',
+                    depositBalance = pendingDeposit?.depositBalance || 0;
+
+                let tr = `<tr>
                         <td>${bdnumber} </td>
                         <td> ${name}</td>
                         <td> ${depositBalance}</td>
@@ -162,37 +179,37 @@
 
                         <td > <button onclick="deletePendingDeposit('${pendingDeposit._id}')" class="btn btn-danger deleteMe"> Delete </button> </td>
                     </tr>`
-                    depositTbody.insertAdjacentHTML("beforeend", tr);
+                depositTbody.insertAdjacentHTML("beforeend", tr);
 
-                    const allBtn = document.querySelectorAll('.deleteMe')
-                    allBtn.forEach( (deleteMe)=>{
-                        deleteMe.parentElement.parentElement.addEventListener('click', function (){
-                            this.remove()
-                        })
+                const allBtn = document.querySelectorAll('.deleteMe')
+                allBtn.forEach((deleteMe) => {
+                    deleteMe.parentElement.parentElement.addEventListener('click', function () {
+                        this.remove()
                     })
-        }) 
-     }
-    getAllPendingDeposit()
+                })
+            })
+        }
+        getAllPendingDeposit()
 
-    async function getAllPendingGoods() {
-        
-        const response = await fetch('/senior/getAllPendingGoods', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                thismonth: month[new Date().getMonth()]
-            },
-        });
-        const result = await response.json();
-        //console.log(result);
+        async function getAllPendingGoods() {
 
-       result.allPendingGoods.forEach((pendingGoods) => {
-           
-             const bdnumber = pendingGoods?.boughtBy?.bdnumber || '000',
-                name = pendingGoods?.boughtBy?.name || '---',
-                totalPrice = pendingGoods?.totalPrice || 0;
- 
-            let tr = `<tr>
+            const response = await fetch('/senior/getAllPendingGoods', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    thismonth: month[new Date().getMonth()]
+                },
+            });
+            const result = await response.json();
+            //console.log(result);
+
+            result.allPendingGoods.forEach((pendingGoods) => {
+
+                const bdnumber = pendingGoods?.boughtBy?.bdnumber || '000',
+                    name = pendingGoods?.boughtBy?.name || '---',
+                    totalPrice = pendingGoods?.totalPrice || 0;
+
+                let tr = `<tr>
                         <td>${bdnumber} </td>
                         <td> ${name}</td>
                         <td> ${Object.keys(pendingGoods.goodsNames)} </td>
@@ -202,77 +219,100 @@
 
                         <td > <button onclick="deletePendingGoods('${pendingGoods._id}')" class="btn btn-danger deleteMe"> Delete </button> </td>
                     </tr>`
-                    buyingTbody.insertAdjacentHTML("beforeend", tr);
-                    const allBtn = document.querySelectorAll('.deleteMe')
-                    allBtn.forEach( (deleteMe)=>{
-                        deleteMe.parentElement.parentElement.addEventListener('click', function (){
-                            this.remove()
-                        })
+                buyingTbody.insertAdjacentHTML("beforeend", tr);
+                const allBtn = document.querySelectorAll('.deleteMe')
+                allBtn.forEach((deleteMe) => {
+                    deleteMe.parentElement.parentElement.addEventListener('click', function () {
+                        this.remove()
                     })
-        }) 
-     }
-    getAllPendingGoods()
+                })
+            })
+        }
+        getAllPendingGoods()
 
 
-    async function acceptPendingDeposit(id){
-        const request = await fetch('/senior/acceptDeposit',{
-            method: 'DELETE',
-            body: JSON.stringify({id}),
-            headers: {
-                'Content-Type': 'application/json',
-            },
+        async function acceptPendingDeposit(id) {
+            const request = await fetch('/senior/acceptDeposit', {
+                method: 'DELETE',
+                body: JSON.stringify({ id }),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            const result = await request.json();
+
+
+            //console.log(result);
+        }
+
+        async function deletePendingDeposit(id) {
+            const request = await fetch('/senior/deleteDeposit', {
+                method: 'DELETE',
+                body: JSON.stringify({ id }),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            const result = await request.json();
+
+
+            //console.log(result);
+        }
+
+        async function acceptPendingGoods(id) {
+            const request = await fetch('/senior/acceptGoods', {
+                method: 'DELETE',
+                body: JSON.stringify({ id }),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            const result = await request.json();
+            //console.log(result);
+        }
+
+        async function deletePendingGoods(id) {
+            const request = await fetch('/senior/deleteGoods', {
+                method: 'DELETE',
+                body: JSON.stringify({ id }),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            const result = await request.json();
+
+            //console.log(id);
+        }
+
+        function deleteMember(id) {
+            alert(' delete ' + id)
+        }
+    </script>
+
+    <script>
+        const whatWillFixedTisMonth = document.querySelector('.whatWillFixedTisMonth');
+
+
+        whatWillFixedTisMonth.addEventListener('submit', async function (event) {
+            event.preventDefault();
+            const fixedBill = document.getElementById('fixedBill');
+
+
+            const request = await fetch('/senior/fixedBill', {
+                method: 'POST',
+                body: JSON.stringify({ fixedBill: parseInt(fixedBill.value), thisMonth: month[new Date().getMonth()] }),
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+
+            const response = await request.json()
+
+            if (response) {
+                fixedBill.value = ''
+            }
         })
-        const result = await request.json();
+    </script>
+    </body>
 
-
-        //console.log(result);
-    }
-
-    async function deletePendingDeposit(id){
-        const request = await fetch('/senior/deleteDeposit',{
-            method: 'DELETE',
-            body: JSON.stringify({id}),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-        const result = await request.json();
-
-
-        //console.log(result);
-    }
-    
-    async function acceptPendingGoods(id){
-        const request = await fetch('/senior/acceptGoods',{
-            method: 'DELETE',
-            body: JSON.stringify({id}),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-        const result = await request.json();
-        //console.log(result);
-    }
-
-    async function deletePendingGoods(id){
-        const request = await fetch('/senior/deleteGoods',{
-            method: 'DELETE',
-            body: JSON.stringify({id}),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-        const result = await request.json();
-
-        //console.log(id);
-    }
-
-    function deleteMember(id){
-        alert(' delete '+id)
-    }
-</script>
-
-
-</body>
-
-</html>
+    </html>

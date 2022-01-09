@@ -2,7 +2,7 @@
 const express = require('express');
 
 // internal dependency
-const { getSeniorPage, getAllMember, getAllPendingDeposit,getAllPendingGoods,acceptDeposit,deleteDeposit,acceptGoods,deleteGoods } = require('../controller/routeController/seniorController');
+const { getSeniorPage, getAllMember, getAllPendingDeposit,getAllPendingGoods,fixedBill,acceptDeposit,deleteDeposit,acceptGoods,deleteGoods } = require('../controller/routeController/seniorController');
 const { checkLogin } = require('../middleware/common/checkLogin');
 const decorateHtml = require('../middleware/common/decorateHtml');
 
@@ -19,6 +19,8 @@ router.get('/allMember',checkLogin, getAllMember);
 router.get('/getAllPendingDeposit',checkLogin, getAllPendingDeposit);
 
 router.get('/getAllPendingGoods',checkLogin, getAllPendingGoods);
+
+router.post('/fixedBill', checkLogin, fixedBill);
 
 router.delete('/acceptDeposit',checkLogin, acceptDeposit);
 

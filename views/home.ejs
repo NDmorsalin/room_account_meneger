@@ -1,263 +1,257 @@
 <%- include('./partials/header.ejs'); %>
 
-<div class="container ">
-    <header class="header">
-        <h2 class="room-name"><%= member.name %> </h2>
+    <div class="container ">
+        <header class="header">
+            <h2 class="room-name">
+                <%= member.name %>
+            </h2>
 
-        <div class="menu">
-            <div class="menu-btn">
-                <span></span>
-                <span></span>
-                <span></span>
+            <div class="menu">
+                <div class="menu-btn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
             </div>
-        </div>
-    </header>
-</div>
-<div class="container">
-    <h3 class="text-center pt-5"> Room member list</h3>
-    <div class="room-table table-responsive">
-
-        <table class="table table-hover table-dark table-borderless">
-            <thead>
-                <tr>
-                    <th> BD </th>
-                    <th> Rank </th>
-                    <th> Name </th>
-                    <th> Phone </th>
-                    <th> Section </th>
-                    <th> Paid </th>
-                </tr>
-            </thead>
-            <tbody id="tbody"></tbody>
-        </table>
+        </header>
     </div>
-    <section class="account-section py-3">
-        <div class="billance py-3 d-flex justify-content-between flex-wrap">
-            <p class="">
-                <span class="will-pay bg-danger">
-                    This month you will pay <span class="tk-amount" id="u-will-pay-amnt">0</span> <sub>
-                        <strong>Tk</strong></sub>
-                </span>
-            </p>
-            <p class="">
-                <span class="will-pay bg-success">
-                    I have paid <span class="tk-amount" id="i-have-paid">0</span> <sub> <strong>Tk</strong></sub>
-                </span>
-            </p>
-            <p class="text-end">
-                <span class="current-bill bg-primary text-end">
-                    Current ballance <span class="tk-amount" id="current-ball">0</span> <sub>
-                        <strong>Tk</strong></sub>
-                </span>
-            </p>
+    <div class="container">
+        <h3 class="text-center pt-5"> Room member list</h3>
+        <div class="room-table table-responsive">
+
+            <table class="table table-hover table-dark table-borderless">
+                <thead>
+                    <tr>
+                        <th> BD </th>
+                        <th> Rank </th>
+                        <th> Name </th>
+                        <th> Phone </th>
+                        <th> Section </th>
+                        <th> Paid </th>
+                    </tr>
+                </thead>
+                <tbody id="tbody"></tbody>
+            </table>
         </div>
-        <form class="bill-deposit-form d-flex justify-content-between align-items-end">
-            <div class="">
-                <label class="d-block" for="deposit-bill">deposit Your This Month bill</label>
-                <input type="number" class="d-block deposit-bill" name="deposit-bill" id="deposit-bill" value=""
-                    placeholder="1000 tk" />
+        <section class="account-section py-3">
+            <div class="billance py-3 d-flex justify-content-between flex-wrap">
+                <p class="">
+                    <span class="will-pay bg-danger">
+                        This month you will pay <span class="tk-amount" id="u-will-pay-amnt">0</span> <sub>
+                            <strong>Tk</strong></sub>
+                    </span>
+                </p>
+                <p class="">
+                    <span class="will-pay bg-success">
+                        I have paid <span class="tk-amount" id="i-have-paid">0</span> <sub> <strong>Tk</strong></sub>
+                    </span>
+                </p>
+                <p class="text-end">
+                    <span class="current-bill bg-primary text-end">
+                        Current ballance <span class="tk-amount" id="current-ball">0</span> <sub>
+                            <strong>Tk</strong></sub>
+                    </span>
+                </p>
             </div>
-            <div class="">
+            <form class="bill-deposit-form d-flex justify-content-between align-items-end">
+                <div class="">
+                    <label class="d-block" for="deposit-bill">deposit Your This Month bill</label>
+                    <input type="number" class="d-block deposit-bill" name="deposit-bill" id="deposit-bill" value=""
+                        placeholder="1000 tk" />
+                </div>
+                <div class="">
 
-                <input type="submit" class="submit-form btn  d-block" name="submit-bill" id="submit-bill"
-                    value="Deposit Bill" />
-            </div>
-        </form>
-    </section>
-    <section class="goods-section py-3">
-        <div class="buy-goods-section p-3">
-            <h3 class="buy-goods-title"> Enter What you buy</h3>
-            <form class="buy-goods-form" accept-charset="utf-8">
-                <div class="goods-container">
-                    <div class="buy-input d-flex justify-content-between">
-                        <div class="goods-name">
-                            <label class="d-block" for="item1">Goods Name</label>
-                            <input class="d-block w-100" type="text" name="item1" id="item1" value=""
-                                placeholder="enter Goods Name" required />
-                        </div>
-                        <div class="goods-price ">
-                            <label class="d-block" for="price1">Goods Price</label>
-                            <input onchange="calculate()" class="d-block" type="number" name="price1" id="price1"
-                                value="" placeholder="enter Goods price" required />
-                        </div>
-                    </div>
+                    <input type="submit" class="submit-form btn  d-block" name="submit-bill" id="submit-bill"
+                        value="Deposit Bill" />
                 </div>
-                <hr />
-                <div class="d-flex justify-content-between">
-                    <p>
-                        total cost now
-                    </p>
-                    <h3><span class="totalCostNow">0</span>tk</h3>
-                </div>
-                <div class="add-new-container d-flex justify-content-between">
-                    <div class="add-new-btn">
-                        <button id="add-new-btn" class="btn btn-dark rounded-circle" type="button">+</button>
-                    </div>
-                    <div class="">
-                        <input type="submit" class="submit-form btn" name="submit" id="submit" value="Submit Goods" />
-                    </div>
-                </div>
-
             </form>
-        </div>
-        <div class="display-goods-container py-3">
-            <div class="display-table table-responsive">
+        </section>
+        <section class="goods-section py-3">
+            <div class="buy-goods-section p-3">
+                <h3 class="buy-goods-title"> Enter What you buy</h3>
+                <form class="buy-goods-form" accept-charset="utf-8">
+                    <div class="goods-container">
+                        <div class="buy-input d-flex justify-content-between">
+                            <div class="goods-name">
+                                <label class="d-block" for="item1">Goods Name</label>
+                                <input class="d-block w-100" type="text" name="item1" id="item1" value=""
+                                    placeholder="enter Goods Name" required />
+                            </div>
+                            <div class="goods-price ">
+                                <label class="d-block" for="price1">Goods Price</label>
+                                <input onchange="calculate()" class="d-block" type="number" name="price1" id="price1"
+                                    value="" placeholder="enter Goods price" required />
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="d-flex justify-content-between">
+                        <p>
+                            total cost now
+                        </p>
+                        <h3><span class="totalCostNow">0</span>tk</h3>
+                    </div>
+                    <div class="add-new-container d-flex justify-content-between">
+                        <div class="add-new-btn">
+                            <button id="add-new-btn" class="btn btn-dark rounded-circle" type="button">+</button>
+                        </div>
+                        <div class="">
+                            <input type="submit" class="submit-form btn" name="submit" id="submit"
+                                value="Submit Goods" />
+                        </div>
+                    </div>
 
-                <table class="table table-hover table-borderless">
-                    <thead>
-                        <tr>
-                            <th> Items List </th>
-                            <th> Price </th>
-                        </tr>
-                    </thead>
-                    <tbody id="display-goods__tbody">
-                        
-                    </tbody>
-                    <tfoot>
-                        <!-- total cost this month -->
-                        <tr>
-                            <td> total cost this month</td>
-                            <td>
-                                <h3 class="items-price totalCostThisMonth">0</h3>
-                            </td>
-                        </tr>
-                    </tfoot>
-                </table>
+                </form>
             </div>
+            <div class="display-goods-container py-3">
+                <div class="display-table table-responsive">
 
-        </div>
-    </section>
-</div>
+                    <table class="table table-hover table-borderless">
+                        <thead>
+                            <tr>
+                                <th> Items List </th>
+                                <th> Price </th>
+                            </tr>
+                        </thead>
+                        <tbody id="display-goods__tbody">
 
-<!-- JavaScript Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
-</script>
+                        </tbody>
+                        <tfoot>
+                            <!-- total cost this month -->
+                            <tr>
+                                <td> total cost this month</td>
+                                <td>
+                                    <h3 class="items-price totalCostThisMonth">0</h3>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
 
-<script src="js/script.js"></script>
+            </div>
+        </section>
+    </div>
 
-<script>
-    const billDepositForm = document.querySelector('.bill-deposit-form');
-    const uWillPayAmnt = document.querySelector('#u-will-pay-amnt');
-    const iHavePaid = document.querySelector('#i-have-paid');
-    const currentBall = document.querySelector('#current-ball');
-    const tbody = document.getElementById('tbody');
-    const displayGoodsTbody = document.getElementById('display-goods__tbody');
-    const totalCostThisMonth = document.querySelector('.totalCostThisMonth');
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+        </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+        integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
-        'September', 'October', 'November', 'December'
-    ]
-    // get all members
-    async function getAllMembers() {
-        const response = await fetch('/allMember', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                thismonth: month[new Date().getMonth()]
-            },
-        });
-        const result = await response.json();
-        
-        result.allMember.forEach((member) => {
-            const bdnumber = member ?.bdnumber || '000',
-                rank = member ?.rank || '---',
-                name = member ?.name || '---',
-                phone = member ?.phone || '---',
-                section = member ?.section || '---';
-                
+    <script src="js/script.js"></script>
+
+
+    <script>
+        const billDepositForm = document.querySelector('.bill-deposit-form');
+        const uWillPayAmnt = document.querySelector('#u-will-pay-amnt');
+        const iHavePaid = document.querySelector('#i-have-paid');
+        const currentBall = document.querySelector('#current-ball');
+        const tbody = document.getElementById('tbody');
+        const displayGoodsTbody = document.getElementById('display-goods__tbody');
+        const totalCostThisMonth = document.querySelector('.totalCostThisMonth');
+
+        const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
+            'September', 'October', 'November', 'December'
+        ]
+        // get all members
+        async function getAllMembers() {
+            const response = await fetch('/allMember', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    thismonth: month[new Date().getMonth()]
+                },
+            });
+            const result = await response.json();
+
+            result.allMember.forEach((member) => {
+                const bdnumber = member?.bdnumber || '000',
+                    rank = member?.rank || '---',
+                    name = member?.name || '---',
+                    phone = member?.phone || '---',
+                    section = member?.section || '---';
+
                 let totalDeposit;
-                result.lustDepositByAll.forEach((eachDeposit)=>{
-                    if(eachDeposit.depositBy.bdnumber === bdnumber){
+                result.lustDepositByAll.forEach((eachDeposit) => {
+                    if (eachDeposit.depositBy.bdnumber === bdnumber) {
                         totalDeposit = eachDeposit.totalDeposit;
                     }
                 })
 
-            let tr = `<tr>
+                let tr = `<tr>
                         <td>${bdnumber} </td>
                         <td> ${rank}</td>
                         <td> ${name}</td>
                         <td> ${phone}</td>
                         <td>  ${section} </td>
-                        <td id="iHavePaidSeeAll">  ${totalDeposit|| 0} </td>
+                        <td id="iHavePaidSeeAll">  ${totalDeposit || 0} </td>
                     </tr>`
-            tbody.insertAdjacentHTML("beforeend", tr);
-        })
+                tbody.insertAdjacentHTML("beforeend", tr);
+            })
 
-        result.goods.forEach((echGoods) => {
+            result.goods.forEach((echGoods) => {
 
-            let tr = `<tr>
+                let tr = `<tr>
                 <td>
                     <div class="items-list">
                         ${Object.keys(echGoods.goodsNames)}
                     </div>
                     <p class="m-0">
-                        ${echGoods.boughtBy.name}, ${echGoods.buyingDate}
+                        ${echGoods.boughtBy.name}, ${moment(echGoods.buyingDate).format("MMM Do YY")}
                     </p>
                 </td>
                 <td>
                     <h3 class="items-price">${echGoods.totalPrice}</h3>
                 </td>
             </tr>`
-            displayGoodsTbody.insertAdjacentHTML("beforeend", tr);
-        });
-        iHavePaid.innerHTML = result.lustDepositByMe ?.totalDeposit || 0;
-        uWillPayAmnt.innerHTML = result.balance ?.thisMonthWillPay || 0;
-        currentBall.innerHTML = result.balance ?.totalBalance || 0;
-        totalCostThisMonth.innerHTML = result.balance ?.totalCost || 0;
-    }
-    getAllMembers()
+                displayGoodsTbody.insertAdjacentHTML("beforeend", tr);
+            });
+            iHavePaid.innerHTML = result.lustDepositByMe?.totalDeposit || 0;
+            uWillPayAmnt.innerHTML = result.balance?.thisMonthWillPay || 0;
+            currentBall.innerHTML = result.balance?.totalBalance || 0;
+            totalCostThisMonth.innerHTML = result.balance?.totalCost || 0;
+        }
+        getAllMembers()
 
-    billDepositForm.addEventListener('submit', async function (event) {
-        event.preventDefault();
+        billDepositForm.addEventListener('submit', async function (event) {
+            event.preventDefault();
 
-        const iHavePaidSeeAll = document.querySelector('#iHavePaidSeeAll');
-        
-        const billAmount = billDepositForm.querySelector('#deposit-bill')
-        const billObj = {
-            depositAmount: billAmount.value,
-            depositMonth: month[new Date().getMonth()]
-        };
+            const iHavePaidSeeAll = document.querySelector('#iHavePaidSeeAll');
 
-        /* const request = await fetch('/billDeposit', {
-            method: 'POST',
-            body: JSON.stringify(billObj),
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        }); */
+            const billAmount = billDepositForm.querySelector('#deposit-bill')
+            const billObj = {
+                depositAmount: billAmount.value,
+                depositMonth: month[new Date().getMonth()]
+            };
 
-        const request = await fetch('/pendingBillDeposit', {
-            method: 'POST',
-            body: JSON.stringify(billObj),
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        });
-         billAmount.value = '';
-        const result = await request.json()
-/*
-        iHavePaidSeeAll.innerHTML = result?.totalDeposit || 0;
-        iHavePaid.innerHTML = result?.totalDeposit || 0;
-        uWillPayAmnt.innerHTML = result.balance?.thisMonthWillPay || 0;
-        currentBall.innerHTML = result.balance?.totalBalance || result?.totalDeposit || 0; 
-        */
-        alert(result.message)
-    })
-</script>
 
-<script>
-    //add new buy file
-    const goodsContainer = document.querySelector('.goods-container')
-    const totalCostNow = document.querySelector('.totalCostNow');
-    const addGoodsBtn = document.querySelector('#add-new-btn')
-    const form = document.querySelector('.buy-goods-form')
-    let counter = 1;
+            const request = await fetch('/pendingBillDeposit', {
+                method: 'POST',
+                body: JSON.stringify(billObj),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            });
+            billAmount.value = '';
+            const result = await request.json()
 
-    addGoodsBtn.addEventListener('click', function (e) {
+        })
+    </script>
 
-        const addCounter = ++counter;
-        const inputFild = ` <div class="buy-input d-flex justify-content-between">
+    <script>
+        //add new buy file
+        const goodsContainer = document.querySelector('.goods-container')
+        const totalCostNow = document.querySelector('.totalCostNow');
+        const addGoodsBtn = document.querySelector('#add-new-btn')
+        const form = document.querySelector('.buy-goods-form')
+        let counter = 1;
+
+        addGoodsBtn.addEventListener('click', function (e) {
+
+            const addCounter = ++counter;
+            const inputFild = ` <div class="buy-input d-flex justify-content-between">
     <div class="goods-name">
     <label class="d-block" for="item${addCounter}">Goods Name</label>
     <input class="d-block w-100" type="text" name="item${addCounter}" id="item${addCounter}" value="" placeholder="enter Goods Name" required/>
@@ -268,71 +262,69 @@
     </div>
     </div>
     `;
-        goodsContainer.insertAdjacentHTML('beforeend', inputFild);
+            goodsContainer.insertAdjacentHTML('beforeend', inputFild);
 
-    });
-
-    function calculate() {
-        let temp = 0;
-        const data = new FormData(form)
-        data.forEach(dt => {
-            if (parseInt(dt)) {
-                temp += parseInt(dt);
-            }
         });
 
-        totalCostNow.innerHTML = temp;
-    }
+        function calculate() {
+            let temp = 0;
+            const data = new FormData(form)
+            data.forEach(dt => {
+                if (parseInt(dt)) {
+                    temp += parseInt(dt);
+                }
+            });
 
-    // submit what are bought
-    form.addEventListener('submit', async function (event) {
-        event.preventDefault();
-        const formData = new FormData(form);
-        const goodsNameArr = [];
-        const goodsPriceArr = [];
-
-        let temp = 0;
-        formData.forEach((data) => {
-            if (parseInt(data)) {
-                goodsPriceArr.push(parseInt(data));
-                temp += parseInt(data);
-            } else {
-                goodsNameArr.push(`${data}`)
-            }
-        })
-
-        const goods = {};
-
-        goodsNameArr.forEach((goodsName, index) => {
-            goods[`${goodsName}`] = goodsPriceArr[index];
-        });
-        const request = await fetch('/pendingBuyGoods', {
-            method: 'POST',
-            body: JSON.stringify({
-                goods,
-                totalPrice: temp,
-                thisMonth: month[new Date().getMonth()]
-            }),
-            headers: {
-                'Content-Type': 'application/json'
-                // 'Content-Type': 'application/x-www-form-urlencoded',
-            },
-        });
-
-        const result = await request.json();
-        //console.log(result);
-        
-        const addGoodsFiled = document.getElementsByClassName('buy-input');
-        let len = addGoodsFiled.length
-        for(let i = 1; i < len ; i++){
-            addGoodsFiled[1].remove()
+            totalCostNow.innerHTML = temp;
         }
-        addGoodsFiled[0].querySelectorAll('input').forEach( ( put ) =>{
-            put.value = ''
-        })
-        totalCostNow.innerHTML = 0;
-    })
-</script>
-</body>
 
-</html>
+        // submit what are bought
+        form.addEventListener('submit', async function (event) {
+            event.preventDefault();
+            const formData = new FormData(form);
+            const goodsNameArr = [];
+            const goodsPriceArr = [];
+
+            let temp = 0;
+            formData.forEach((data) => {
+                if (parseInt(data)) {
+                    goodsPriceArr.push(parseInt(data));
+                    temp += parseInt(data);
+                } else {
+                    goodsNameArr.push(`${data}`)
+                }
+            })
+
+            const goods = {};
+
+            goodsNameArr.forEach((goodsName, index) => {
+                goods[`${goodsName}`] = goodsPriceArr[index];
+            });
+            const request = await fetch('/pendingBuyGoods', {
+                method: 'POST',
+                body: JSON.stringify({
+                    goods,
+                    totalPrice: temp,
+                    thisMonth: month[new Date().getMonth()]
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+            });
+
+            const result = await request.json();
+            const addGoodsFiled = document.getElementsByClassName('buy-input');
+            let len = addGoodsFiled.length
+            for (let i = 1; i < len; i++) {
+                addGoodsFiled[1].remove()
+            }
+            addGoodsFiled[0].querySelectorAll('input').forEach((put) => {
+                put.value = ''
+            })
+            totalCostNow.innerHTML = 0;
+        })
+    </script>
+    </body>
+
+    </html>
